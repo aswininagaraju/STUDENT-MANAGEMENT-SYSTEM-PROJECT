@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Logout</title>
+    <style>
+        body {
+            background-color: rgb(0, 255, 64);
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: rgb(192, 192, 192);
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        /* Change button color */
+        input[type="submit"] {
+            background-color: #3498db; /* Change to your preferred color */
+            color: rgb(0, 255, 64);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: rgb(0, 255, 64); /* Change to the hover color you prefer */
+        }
+
+        /* Add background image to the button */
+        input[type="submit"].custom-button {
+            background: url('userrating1.jpg') center center no-repeat;
+            background-size: cover;
+            text-align: center;
+            color: rgb(0, 255, 64);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+         body {
+      background-image: url('userrating5.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+   }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Logout</h1>
+    <p>Are you sure you want to log out?</p>
+    <p><button class="custom-button" input type="submit" onclick="location.href='logoutsuccess.html';">Logout</button></p>
+</div>
+</body>
+</html>

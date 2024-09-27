@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Arial;
+            font-size: 17px;
+            padding: 8px;
+            margin: 0;
+            background-image: url('userrating5.jpg'); /* Replace 'background.jpg' with your actual image file path */
+            background-size: cover;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        img.qr-code {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+	<form action="paymentsuccess.html">
+    <h2>QR Code</h2>
+    <img class="qr-code" src="qr-code.jpg" alt="QR Code">
+</div>
+
+<script>
+    // Add a small delay before redirecting to give the user time to view the QR code.
+    setTimeout(function () {
+        window.location.href = "paymentsuccess.html";
+    }, 3000); // Redirect after 3 seconds (adjust this as needed)
+</script>
+</body>
+</html>

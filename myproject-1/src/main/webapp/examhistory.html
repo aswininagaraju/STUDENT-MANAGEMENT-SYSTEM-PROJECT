@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Exam History</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4; /* Light gray background */
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navigation bar styles */
+        nav {
+            background-color: #4a90e2; /* Blue background */
+            padding: 15px; /* Padding */
+            color: white; /* White text */
+            text-align: center; /* Center the text */
+        }
+
+        nav a {
+            color: white; /* White text for links */
+            margin: 0 15px; /* Space between links */
+            text-decoration: none; /* No underline */
+            font-weight: bold; /* Bold text */
+        }
+
+        nav a:hover {
+            text-decoration: underline; /* Underline on hover */
+        }
+
+        .container {
+            max-width: 800px; /* Set a maximum width */
+            margin: 20px auto; /* Center the container with margin */
+            background: #fff; /* White background for the container */
+            padding: 20px; /* Padding around the container */
+            border-radius: 5px; /* Rounded corners */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+
+        h1, h2 {
+            text-align: center; /* Center the headings */
+            color: #4a90e2; /* Blue color for the headings */
+        }
+
+        .input-group {
+            margin-bottom: 15px; /* Space between input fields */
+        }
+
+        label {
+            display: block; /* Labels on separate lines */
+            margin-bottom: 5px; /* Space below labels */
+        }
+
+        input[type="text"],
+        select {
+            width: 100%; /* Full width inputs */
+            padding: 10px; /* Padding inside inputs */
+            border: 1px solid #ccc; /* Light gray border */
+            border-radius: 3px; /* Rounded corners */
+        }
+
+        button {
+            background-color: #4a90e2; /* Blue background */
+            color: white; /* White text */
+            border: none; /* No border */
+            padding: 10px 15px; /* Padding */
+            border-radius: 3px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor */
+            font-size: 16px; /* Font size */
+            width: 100%; /* Full-width button */
+        }
+
+        button:hover {
+            background-color: #357ab8; /* Darker blue on hover */
+        }
+
+        .result {
+            margin-top: 20px; /* Space above result */
+            padding: 10px;
+            border: 1px solid #ccc; /* Light gray border */
+            border-radius: 5px; /* Rounded corners */
+            background-color: #eaf4ff; /* Light blue background */
+        }
+
+        .grade {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc; /* Light gray border */
+            border-radius: 5px; /* Rounded corners */
+            background-color: #dff0d8; /* Light green background */
+        }
+
+        .seating-arrangement {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc; /* Light gray border */
+            border-radius: 5px; /* Rounded corners */
+            background-color: #fff3cd; /* Light yellow background */
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <a href="#examScoreSection">Check Exam Score</a>
+        <a href="assessment.html">Assessments</a>
+        <a href="seatingarrangement.html">Seating Arrangement</a>
+        <a href="#aboutSection">About</a>
+    </nav>
+
+    <div class="container">
+        <h1>Student Exam History</h1>
+
+        <!-- Check Exam Score Section -->
+        <div id="examScoreSection">
+            <h2>Check Exam Score</h2>
+            <div class="input-group">
+                <label for="idNum">ID Number</label>
+                <input type="text" id="idNum" placeholder="ID Number">
+            </div>
+            <div class="input-group">
+                <label for="studentName">Enter Name</label>
+                <input type="text" id="studentName" placeholder="Enter Name">
+            </div>
+            <div class="input-group">
+                <label for="examName">Select Exam Name</label>
+                <select id="examName">
+                    <option value="" disabled selected>Select Exam</option>
+                    <option value="Maths">Maths</option>
+                    <option value="Science">Science</option>
+                    <option value="History">History</option>
+                    <option value="English">English</option>
+                    <option value="Telugu">Telugu</option>
+                    <option value="Social Studies">Social Studies</option>
+                </select>
+            </div>
+            <button id="checkScoreButton">Check Score</button>
+            <div class="result" id="result" style="display: none;"></div>
+        </div>
+
+        <!-- Grades and Assessments Section -->
+        <div id="gradeSection">
+            <h2>Grades</h2>
+            <div class="input-group">
+                <label for="gradeExamName">Select Exam for Grades</label>
+                <select id="gradeExamName">
+                    <option value="" disabled selected>Select Exam</option>
+                    <option value="Maths">Maths</option>
+                    <option value="Science">Science</option>
+                    <option value="History">History</option>
+                    <option value="English">English</option>
+                    <option value="Telugu">Telugu</option>
+                    <option value="Social Studies">Social Studies</option>
+                </select>
+            </div>
+            <button id="checkGradeButton">Check Grade</button>
+            <div class="grade" id="gradeResult" style="display: none;"></div>
+        </div>
+
+       
+
+
+    <script>
+        // Sample data for exam scores
+        const examScores = {
+            'Maths': 85,
+            'Science': 90,
+            'History': 78,
+            'English': 92,
+            'Telugu': 99,
+            'Social Studies': 87
+        };
+
+        // Function to check the score for a given exam name
+        function checkScore(examName) {
+            return examScores[examName] || null; // Return score or null if not found
+        }
+
+        // Handle button click event to check the score
+        document.getElementById('checkScoreButton').addEventListener('click', function () {
+            const idNum = document.getElementById('idNum').value.trim();
+            const studentName = document.getElementById('studentName').value.trim();
+            const examName = document.getElementById('examName').value;
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'block'; // Show result div
+
+            // Check if all fields are filled
+            if (idNum === '' || studentName === '' || examName === '') {
+                resultDiv.innerHTML = `<strong>Please fill in all fields.</strong>`;
+                return;
+            }
+
+            // Check score
+            const score = checkScore(examName);
+            if (score !== null) {
+                resultDiv.innerHTML = `<strong>Score for ${examName}:</strong> ${score} (Student: ${studentName}, ID: ${idNum})`;
+            } else {
+                resultDiv.innerHTML = `<strong>No score found for ${examName}.</strong>`;
+            }
+        });
+
+        // Function to determine the grade based on score
+        function getGrade(score) {
+            if (score >= 90) return 'A';
+            if (score >= 80) return 'B';
+            if (score >= 70) return 'C';
+            return 'F';
+        }
+
+        // Handle button click event to check the grade
+        document.getElementById('checkGradeButton').addEventListener('click', function () {
+            const gradeExamName = document.getElementById('gradeExamName').value;
+            const gradeResultDiv = document.getElementById('gradeResult');
+            gradeResultDiv.style.display = 'block'; // Show grade result div
+
+            // Check if exam is selected
+            if (gradeExamName === '') {
+                gradeResultDiv.innerHTML = `<strong>Please select an exam.</strong>`;
+                return;
+            }
+
+            // Get the score and determine the grade
+            const score = checkScore(gradeExamName);
+            if (score !== null) {
+                const grade = getGrade(score);
+                gradeResultDiv.innerHTML = `<strong>Grade for ${gradeExamName}:</strong> ${grade} (Score: ${score})`;
+            } else {
+                gradeResultDiv.innerHTML = `<strong>No score found for ${gradeExamName}.</strong>`;
+            }
+        });
+    </script>
+</body>
+</html>

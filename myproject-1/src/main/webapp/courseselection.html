@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Selection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4; /* Light gray background */
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px; /* Set a maximum width */
+            margin: auto; /* Center the container */
+            background: #fff; /* White background for the container */
+            padding: 20px; /* Padding around the container */
+            border-radius: 5px; /* Rounded corners */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+
+        h1 {
+            text-align: center; /* Center the heading */
+            color: #4a90e2; /* Blue color for the heading */
+        }
+
+        form {
+            margin-bottom: 20px; /* Margin below the form */
+        }
+
+        .input-group {
+            margin-bottom: 15px; /* Space between input fields */
+        }
+
+        label {
+            display: block; /* Labels on separate lines */
+            margin-bottom: 5px; /* Space below labels */
+        }
+
+        input[type="text"] {
+            width: 100%; /* Full width inputs */
+            padding: 10px; /* Padding inside inputs */
+            border: 1px solid #ccc; /* Light gray border */
+            border-radius: 3px; /* Rounded corners */
+        }
+
+        .subjects-group {
+            margin-bottom: 20px; /* Space below subject groups */
+            border: 1px solid #ccc; /* Border around subject groups */
+            border-radius: 3px; /* Rounded corners */
+            padding: 10px; /* Padding inside subject groups */
+        }
+
+        button {
+            background-color: #4a90e2; /* Blue background */
+            color: white; /* White text */
+            border: none; /* No border */
+            padding: 10px 15px; /* Padding */
+            border-radius: 3px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor */
+            font-size: 16px; /* Font size */
+            width: 100%; /* Full-width button */
+        }
+
+        button:hover {
+            background-color: #357ab8; /* Darker blue on hover */
+        }
+
+        .results {
+            margin-top: 20px; /* Space above results */
+        }
+
+        .success {
+            background-color: #dff0d8; /* Light green background for success */
+            padding: 10px; /* Padding */
+            border: 1px solid #c3e6cb; /* Green border */
+            border-radius: 3px; /* Rounded corners */
+        }
+
+        .error {
+            background-color: #f2dede; /* Light red background for error */
+            padding: 10px; /* Padding */
+            border: 1px solid #ebccd1; /* Red border */
+            border-radius: 3px; /* Rounded corners */
+        }
+
+        .course-details {
+            margin-top: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Course Selection</h1>
+        <form id="courseForm">
+            <div class="input-group">
+                <label for="studentName">Student Name</label>
+                <input type="text" id="studentName" required placeholder="Enter your name">
+            </div>
+
+            <div class="subjects-group">
+                <h2>Core Subjects</h2>
+                <label><input type="checkbox" value="Mathematics"> Mathematics</label>
+                <label><input type="checkbox" value="English"> English</label>
+                <label><input type="checkbox" value="Physics"> Physics</label>
+                <label><input type="checkbox" value="Chemistry"> Chemistry</label>
+            </div>
+
+            <div class="subjects-group">
+                <h2>Science Subjects</h2>
+                <label><input type="checkbox" value="Biology"> Biology</label>
+                <label><input type="checkbox" value="Computer Science"> Computer Science</label>
+                <label><input type="checkbox" value="Environmental Science"> Environmental Science</label>
+            </div>
+
+            <div class="subjects-group">
+                <h2>Arts Subjects</h2>
+                <label><input type="checkbox" value="History"> History</label>
+                <label><input type="checkbox" value="Literature"> Literature</label>
+                <label><input type="checkbox" value="Art"> Art</label>
+            </div>
+
+            <div class="subjects-group">
+                <h2>Computer Science Subjects</h2>
+                <label><input type="checkbox" value="Information Technology"> Information Technology</label>
+                <label><input type="checkbox" value="Software Engineering"> Software Engineering</label>
+            </div>
+
+            <button type="submit">Submit Selection</button>
+        </form>
+
+        <div class="results" id="results"></div>
+    </div>
+
+    <script>
+        const courseDetails = {
+            "Mathematics": {
+                description: "Study of numbers, shapes, and patterns.",
+                credits: 4
+            },
+            "English": {
+                description: "Study of language, literature, and composition.",
+                credits: 3
+            },
+            "Physics": {
+                description: "The study of matter, energy, and the fundamental forces of nature.",
+                credits: 4
+            },
+            "Chemistry": {
+                description: "Study of substances, their properties, and how they interact.",
+                credits: 3
+            },
+            "Biology": {
+                description: "The study of living organisms and their interactions with the environment.",
+                credits: 3
+            },
+            "Computer Science": {
+                description: "Study of computers and computational systems.",
+                credits: 4
+            },
+            "Environmental Science": {
+                description: "Study of the environment and solutions to environmental issues.",
+                credits: 3
+            },
+            "History": {
+                description: "Study of past events and their impact on society.",
+                credits: 3
+            },
+            "Literature": {
+                description: "Study of written works, including fiction and non-fiction.",
+                credits: 3
+            },
+            "Art": {
+                description: "Study of visual arts, including painting, sculpture, and design.",
+                credits: 2
+            },
+            "Information Technology": {
+                description: "Study of technology in computer systems and networks.",
+                credits: 3
+            },
+            "Software Engineering": {
+                description: "Study of software development processes and methodologies.",
+                credits: 4
+            },
+            "CODING": {
+                description: "Study of programming languages and concepts.",
+                credits: 3
+            },
+            "Aptitude": {
+                description: "Study of logical reasoning and problem-solving skills.",
+                credits: 2
+            }
+        };
+
+        document.getElementById('courseForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent page refresh
+
+            const studentName = document.getElementById('studentName').value;
+            const selectedCourses = Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map(input => input.value);
+
+            const resultsDiv = document.getElementById('results');
+
+            // Clear previous results
+            resultsDiv.innerHTML = '';
+
+            if (selectedCourses.length > 0) {
+                let courseDetailsHTML = '<div class="course-details"><strong>Course Details:</strong><br>';
+
+                selectedCourses.forEach(course => {
+                    const details = courseDetails[course];
+                    courseDetailsHTML += `
+                        <strong>${course}</strong>: ${details.description} (Credits: ${details.credits})<br>
+                    `;
+                });
+
+                courseDetailsHTML += '</div>';
+
+                resultsDiv.innerHTML = `
+                    <div class="success">
+                        ${studentName}, you have successfully selected the following courses:<br>
+                        <strong>${selectedCourses.join(', ')}</strong>
+                    </div>
+                    ${courseDetailsHTML}
+                `;
+            } else {
+                resultsDiv.innerHTML = `
+                    <div class="error">
+                        Please select at least one course.
+                    </div>
+                `;
+            }
+        });
+    </script>
+</body>
+
+</html>

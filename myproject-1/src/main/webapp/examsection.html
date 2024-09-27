@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Exam Score Checking</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4; /* Light gray background */
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px; /* Set a maximum width */
+            margin: auto; /* Center the container */
+            background: #fff; /* White background for the container */
+            padding: 20px; /* Padding around the container */
+            border-radius: 5px; /* Rounded corners */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+
+        h1 {
+            text-align: center; /* Center the heading */
+            color: #4a90e2; /* Blue color for the heading */
+        }
+
+        .input-group {
+            margin-bottom: 15px; /* Space between input fields */
+        }
+
+        label {
+            display: block; /* Labels on separate lines */
+            margin-bottom: 5px; /* Space below labels */
+        }
+
+        input[type="text"] {
+            width: 100%; /* Full width inputs */
+            padding: 10px; /* Padding inside inputs */
+            border: 1px solid #ccc; /* Light gray border */
+            border-radius: 3px; /* Rounded corners */
+        }
+
+        select {
+            width: 100%; /* Full width select */
+            padding: 10px; /* Padding inside select */
+            border: 1px solid #ccc; /* Light gray border */
+            border-radius: 3px; /* Rounded corners */
+        }
+
+        button {
+            background-color: #4a90e2; /* Blue background */
+            color: white; /* White text */
+            border: none; /* No border */
+            padding: 10px 15px; /* Padding */
+            border-radius: 3px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor */
+            font-size: 16px; /* Font size */
+            width: 100%; /* Full-width button */
+        }
+
+        button:hover {
+            background-color: #357ab8; /* Darker blue on hover */
+        }
+
+        .result {
+            margin-top: 20px; /* Space above result */
+            padding: 10px;
+            border: 1px solid #ccc; /* Light gray border */
+            border-radius: 5px; /* Rounded corners */
+            background-color: #eaf4ff; /* Light blue background */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Check Exam Score</h1>
+        <div class="input-group">
+            <label for="idNum">ID Number</label>
+            <input type="text" id="idNum" placeholder="Id number">
+        </div>
+        <div class="input-group">
+            <label for="studentName">Enter Name</label>
+            <input type="text" id="studentName" placeholder="Enter Name">
+        </div>
+        <div class="input-group">
+            <label for="examName">Select Exam Name</label>
+            <select id="examName">
+                <option value="" disabled selected>Select Exam</option>
+                <option value="Maths">Maths</option>
+                <option value="Science">Science</option>
+                <option value="History">History</option>
+                <option value="English">English</option>
+                <option value="Telugu">Telugu</option>
+                <option value="Social Studies">Social Studies</option>
+            </select>
+        </div>
+        
+        <button id="checkScoreButton">Check Score</button>
+
+        <div class="result" id="result" style="display: none;"></div>
+    </div>
+
+    <script>
+        // Function to generate a random score between 70 and 90
+        function getRandomScore() {
+            return Math.floor(Math.random() * (90 - 70 + 1)) + 70;
+        }
+
+        // Handle button click event to check the score
+        document.getElementById('checkScoreButton').addEventListener('click', function () {
+            const idNum = document.getElementById('idNum').value.trim();
+            const studentName = document.getElementById('studentName').value.trim();
+            const examName = document.getElementById('examName').value;
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'block'; // Show result div
+
+            // Check if all fields are filled
+            if (idNum === '' || studentName === '' || examName === '') {
+                resultDiv.innerHTML = `<strong>Please fill in all fields.</strong>`;
+                return;
+            }
+
+            // Generate a random score
+            const score = getRandomScore();
+            resultDiv.innerHTML = `<strong>Score for ${examName}:</strong> ${score} (Student: ${studentName}, ID: ${idNum})`;
+        });
+    </script>
+</body>
+
+</html>

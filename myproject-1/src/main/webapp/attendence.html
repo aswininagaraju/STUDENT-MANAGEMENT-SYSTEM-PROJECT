@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Tracker</title>
+    <style>
+     
+        body {
+    font-family: Arial, sans-serif;
+    background-image: url('std.png'); /* Change this to your image URL */
+    background-size: cover; /* Cover the entire viewport */
+    background-repeat: no-repeat; /* Prevents the background image from repeating */
+    background-position: center; /* Center the image */
+    color: #333;
+}
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .attendance-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .attendance-list {
+            margin-bottom: 20px;
+        }
+
+        .attendance-list div {
+            margin-bottom: 10px;
+        }
+
+        .summary {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Track Attendance</h2>
+
+    <div class="attendance-container">
+        <form id="attendanceForm">
+            <div id="attendanceList" class="attendance-list">
+                <!-- Students List will be dynamically populated here -->
+            </div>
+
+            <button type="submit">Submit Attendance</button>
+        </form>
+
+        <div class="summary">
+            Present: <span id="presentCount">0</span> / Absent: <span id="absentCount">0</span>
+        </div>
+    </div>
+
+    <script>
+        // Sample list of students (can be dynamic)
+        const students = [
+            { id: 1, name: 'John Doe' },
+            { id: 2, name: 'Jane Smith' },
+            { id: 3, name: 'Tom Johnson' },
+            { id: 4, name: 'Emily Davis' }
+        ];
+
+        const attendanceList = document.getElementById('attendanceList');
+
+        // Populate attendance form with student names and checkboxes
+        students.forEach(student => {
+            const studentDiv = document.createElement('div');
+            studentDiv.innerHTML = `
+                ${student.name} 
+                <label>
+                    <input type="radio" name="attendance-${student.id}" value="present" required> Present
+                </label>
+                <label>
+                    <input type="radio" name="attendance-${student.id}" value="absent"> Absent
+                </label>
+            `;
+            attendanceList.appendChild(studentDiv);
+        });
+
+        // Handle form submission
+        document.getElementById('attendanceForm').addEventListener('submit', function(e) {
+            e.preventDefault();  // Prevent form from submitting and refreshing page
+
+            let presentCount = 0;
+            let absentCount = 0;
+
+            students.forEach(student => {
+                const attendance = document.querySelector(`input[name="attendance-${student.id}"]:checked`).value;
+                if (attendance === 'present') {
+                    presentCount++;
+                } else {
+                    absentCount++;
+                }
+            });
+
+            // Update summary display
+            document.getElementById('presentCount').textContent = presentCount;
+            document.getElementById('absentCount').textContent = absentCount;
+
+            // Optionally: send attendance data to the server
+            // You can use fetch/AJAX here to send the attendance data for backend storage
+            console.log('Attendance submitted: ', { presentCount, absentCount });
+        });
+    </script>
+
+</body>
+</html>

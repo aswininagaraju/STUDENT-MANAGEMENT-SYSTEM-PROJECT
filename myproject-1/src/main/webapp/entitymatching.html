@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entity Matching Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4; /* Light gray background */
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px; /* Set a maximum width */
+            margin: auto; /* Center the container */
+            background: #fff; /* White background for the container */
+            padding: 20px; /* Padding around the container */
+            border-radius: 5px; /* Rounded corners */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+
+        h1 {
+            text-align: center; /* Center the heading */
+            color: #4a90e2; /* Blue color for the heading */
+        }
+
+        form {
+            margin-bottom: 20px; /* Margin below the form */
+        }
+
+        .input-group {
+            margin-bottom: 15px; /* Space between input fields */
+        }
+
+        label {
+            display: block; /* Labels on separate lines */
+            margin-bottom: 5px; /* Space below labels */
+        }
+
+        input[type="text"], input[type="email"] {
+            width: 100%; /* Full width inputs */
+            padding: 10px; /* Padding inside inputs */
+            border: 1px solid #ccc; /* Light gray border */
+            border-radius: 3px; /* Rounded corners */
+        }
+
+        button {
+            background-color: #4a90e2; /* Blue background */
+            color: white; /* White text */
+            border: none; /* No border */
+            padding: 10px 15px; /* Padding */
+            border-radius: 3px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor */
+            font-size: 16px; /* Font size */
+        }
+
+        button:hover {
+            background-color: #357ab8; /* Darker blue on hover */
+        }
+
+        .results {
+            margin-top: 20px; /* Space above results */
+        }
+
+        .match {
+            background-color: #dff0d8; /* Light green background for matches */
+            padding: 10px; /* Padding */
+            border: 1px solid #c3e6cb; /* Green border */
+            border-radius: 3px; /* Rounded corners */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Entity Matching Tool</h1>
+        <form id="matchingForm">
+            <div class="input-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" required placeholder="Enter Name">
+            </div>
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" required placeholder="Enter Email">
+            </div>
+            <button type="submit">Match</button>
+        </form>
+
+        <div class="results" id="results"></div>
+    </div>
+
+    <script>
+        // Sample existing records for matching
+        const existingRecords = [
+            { name: 'John Doe', email: 'john.doe@example.com' },
+            { name: 'Jane Smith', email: 'jane.smith@example.com' },
+            { name: 'Emily Jones', email: 'emily.jones@example.com' },
+            { name: 'Jon Doe', email: 'jon.doe@example.com' },
+            { name: 'Jane Smtih', email: 'jane.smtih@example.com' },
+            { name: 'Emilly Jones', email: 'emilly.jones@example.com' },
+            { name: 'ASWINI', email: 'aswinichowdary2603@gmail.com' },
+            { name: 'sasi', email: '2100032019@gmail.com' },
+            { name: 'Emilly Jones', email: 'emilly.jones@example.com' }
+        ];
+
+        // Function to find matches
+        function findMatches(inputName, inputEmail) {
+            const matches = existingRecords.filter(record => {
+                return (
+                    record.name.toLowerCase().includes(inputName.toLowerCase()) ||
+                    record.email.toLowerCase().includes(inputEmail.toLowerCase())
+                );
+            });
+            return matches;
+        }
+
+        // Handle form submission
+        document.getElementById('matchingForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent page refresh
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+
+            const matches = findMatches(name, email);
+            const resultsDiv = document.getElementById('results');
+
+            // Clear previous results
+            resultsDiv.innerHTML = '';
+
+            if (matches.length > 0) {
+                matches.forEach(match => {
+                    const matchDiv = document.createElement('div');
+                    matchDiv.className = 'match';
+                    matchDiv.innerHTML = `<strong>Matched Record:</strong> ${match.name} - ${match.email}`;
+                    resultsDiv.appendChild(matchDiv);
+                });
+            } else {
+                resultsDiv.innerHTML = '<div>No matches found.</div>';
+            }
+        });
+    </script>
+</body>
+</html>

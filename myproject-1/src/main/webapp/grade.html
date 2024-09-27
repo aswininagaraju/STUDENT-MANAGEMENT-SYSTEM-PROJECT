@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Grades</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4; /* Light gray background */
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px; /* Set a maximum width */
+            margin: auto; /* Center the container */
+            background: #fff; /* White background for the container */
+            padding: 20px; /* Padding around the container */
+            border-radius: 5px; /* Rounded corners */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+
+        h1 {
+            text-align: center; /* Center the heading */
+            color: #4a90e2; /* Blue color for the heading */
+        }
+
+        .input-group {
+            margin-bottom: 15px; /* Space between input fields */
+        }
+
+        label {
+            display: block; /* Labels on separate lines */
+            margin-bottom: 5px; /* Space below labels */
+        }
+
+        select,
+        button {
+            width: 100%; /* Full width inputs */
+            padding: 10px; /* Padding inside inputs */
+            border: 1px solid #ccc; /* Light gray border */
+            border-radius: 3px; /* Rounded corners */
+        }
+
+        button {
+            background-color: #4a90e2; /* Blue background */
+            color: white; /* White text */
+            border: none; /* No border */
+            cursor: pointer; /* Pointer cursor */
+            font-size: 16px; /* Font size */
+        }
+
+        button:hover {
+            background-color: #357ab8; /* Darker blue on hover */
+        }
+
+        .result {
+            margin-top: 20px; /* Space above result */
+            padding: 10px;
+            border: 1px solid #ccc; /* Light gray border */
+            border-radius: 5px; /* Rounded corners */
+            background-color: #eaf4ff; /* Light blue background */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Check Your Grade</h1>
+        <div class="input-group">
+            <label for="gradeExamName">Select Exam for Grades</label>
+            <select id="gradeExamName">
+                <option value="" disabled selected>Select Exam</option>
+                <option value="Maths">Maths</option>
+                <option value="Science">Science</option>
+                <option value="History">History</option>
+                <option value="English">English</option>
+                <option value="Telugu">Telugu</option>
+                <option value="Social Studies">Social Studies</option>
+            </select>
+        </div>
+        <button id="checkGradeButton">Check Grade</button>
+        <div class="result" id="gradeResult" style="display: none;"></div>
+    </div>
+
+    <script>
+        // Sample data for exam scores
+        const examScores = {
+            'Maths': 85,
+            'Science': 90,
+            'History': 78,
+            'English': 92,
+            'Telugu': 99,
+            'Social Studies': 87
+        };
+
+        // Function to determine the grade based on score
+        function getGrade(score) {
+            if (score >= 90) return 'A';
+            if (score >= 80) return 'B';
+            if (score >= 70) return 'C';
+            return 'F';
+        }
+
+        // Handle button click event to check the grade
+        document.getElementById('checkGradeButton').addEventListener('click', function () {
+            const gradeExamName = document.getElementById('gradeExamName').value;
+            const gradeResultDiv = document.getElementById('gradeResult');
+            gradeResultDiv.style.display = 'block'; // Show grade result div
+
+            // Check if exam is selected
+            if (gradeExamName === '') {
+                gradeResultDiv.innerHTML = `<strong>Please select an exam.</strong>`;
+                return;
+            }
+
+            // Get the score and determine the grade
+            const score = examScores[gradeExamName];
+            if (score !== undefined) {
+                const grade = getGrade(score);
+                gradeResultDiv.innerHTML = `<strong>Grade for ${gradeExamName}:</strong> ${grade} (Score: ${score})`;
+            } else {
+                gradeResultDiv.innerHTML = `<strong>No score found for ${gradeExamName}.</strong>`;
+            }
+        });
+    </script>
+</body>
+
+</html>

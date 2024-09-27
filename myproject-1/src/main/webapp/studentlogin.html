@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Login - Seating Arrangement</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 100px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .login-form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Student Login</h2>
+        <div class="login-form">
+            <form id="studentLoginForm">
+                <div class="form-group">
+                    <label for="rollNumber">Roll Number</label>
+                    <input type="text" class="form-control" id="rollNumber" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Login</button>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById("studentLoginForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent default form submission
+            const rollNumber = document.getElementById("rollNumber").value;
+            // Redirect to seating plan page with roll number
+            window.location.href = `seatingplan.html?rollNumber=${rollNumber}`;
+        });
+    </script>
+</body>
+</html>

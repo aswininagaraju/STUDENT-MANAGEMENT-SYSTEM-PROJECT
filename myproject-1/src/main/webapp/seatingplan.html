@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seating Plan - Seating Arrangement</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .seating-plan {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            text-align: center;
+            padding: 10px;
+        }
+        .search-box {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .no-result {
+            text-align: center;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Check Your Seating Plan</h2>
+
+        <!-- Search box for the user to enter the roll number -->
+        <div class="search-box">
+            <input type="text" id="rollNumberInput" placeholder="Enter your Roll Number" class="form-control" style="width: 300px; margin: 0 auto;">
+            <button onclick="displaySeating()" class="btn btn-primary" style="margin-top: 10px;">Check Seating Plan</button>
+        </div>
+
+        <div class="seating-plan">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Seat Number</th>
+                        <th>Student Name</th>
+                        <th>Roll Number</th>
+                    </tr>
+                </thead>
+                <tbody id="studentSeating">
+                    <!-- Seating details will be injected here -->
+                </tbody>
+            </table>
+            <div id="noResultMessage" class="no-result"></div>
+        </div>
+    </div>
+
+    <script>
+        // Sample seating data
+        const seatingData = [
+            { seatNumber: 1, name: "ASWINI", roll: "101" },
+            { seatNumber: 2, name: "SRINIJA", roll: "102" },
+            { seatNumber: 3, name: "SASI", roll: "103" },
+            { seatNumber: 4, name: "VENKY", roll: "104" },
+            { seatNumber: 5, name: "AJAY Davis", roll: "105" }
+        ];
+
+        // Function to display the seating arrangement for the entered roll number
+        function displaySeating() {
+            const rollNumberInput = document.getElementById("rollNumberInput").value;
+            const studentSeating = document.getElementById("studentSeating");
+            const noResultMessage = document.getElementById("noResultMessage");
+            
+            // Clear previous results
+            studentSeating.innerHTML = "";
+            noResultMessage.innerHTML = "";
+
+            // Find the student based on the entered roll number
+            const student = seatingData.find(s => s.roll === rollNumberInput);
+
+            if (student) {
+                // If student is found, display seating info
+                const row = document.createElement("tr");
+                row.innerHTML = `<td>${student.seatNumber}</td><td>${student.name}</td><td>${student.roll}</td>`;
+                studentSeating.appendChild(row);
+            } else {
+                // If no student found, display a message
+                noResultMessage.innerHTML = "No seating arrangement found for this Roll Number.";
+            }
+        }
+    </script>
+</body>
+</html>

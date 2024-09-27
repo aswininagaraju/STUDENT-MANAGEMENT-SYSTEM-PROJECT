@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Management System - Manage Students</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1em;
+            text-align: center;
+        }
+        body {
+    font-family: Arial, sans-serif;
+    background-image: url('student.jpeg'); /* Change this to your image URL */
+    background-size: cover; /* Cover the entire viewport */
+    background-repeat: no-repeat; /* Prevents the background image from repeating */
+    background-position: center; /* Center the image */
+    color: #333;
+}
+
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        main {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 40%;
+            border-radius: 10px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #studentList div {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Student Management System - Manage Students</h1>
+    <nav>
+        
+    </nav>
+</header>
+
+<main>
+    <section>
+        <h2>Manage Students</h2>
+        <button id="addStudentBtn">Add New Student</button>
+        <div id="studentList">
+            <!-- Student list will be dynamically populated here -->
+        </div>
+    </section>
+</main>
+
+<!-- Modal for Adding a Student -->
+<div id="addStudentModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeStudentModal">&times;</span>
+        <h2>Add New Student</h2>
+        <form id="studentForm">
+            <label for="studentName">Name:</label>
+            <input type="text" id="studentName" required>
+
+            <label for="studentAge">Age:</label>
+            <input type="number" id="studentAge" required>
+
+            <label for="studentGrade">Grade:</label>
+            <input type="text" id="studentGrade" required>
+
+            <button type="submit">Add Student</button>
+        </form>
+    </div>
+</div>
+
+<!-- Modal for Editing a Student -->
+<div id="editStudentModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeEditStudentModal">&times;</span>
+        <h2>Edit Student</h2>
+        <form id="editStudentForm">
+            <input type="hidden" id="editStudentId">
+
+            <label for="editStudentName">Name:</label>
+            <input type="text" id="editStudentName" required>
+
+            <label for="editStudentAge">Age:</label>
+            <input type="number" id="editStudentAge" required>
+
+            <label for="editStudentGrade">Grade:</label>
+            <input type="text" id="editStudentGrade" required>
+
+            <button type="submit">Update Student</button>
+        </form>
+    </div>
+</div>
+
+<script>
+// Sample student data
+let students = [
+    { id: 1, name: 'John Doe', age: 16, grade: '10th' },
+    { id: 2, name: 'Jane Smith', age: 15, grade: '9th' },
+    { id: 3, name: 'Emily Davis', age: 17, grade: '11th' }
+];
+
+const studentList = document.getElementById('studentList');
+const addStudentBtn = document.getElementById('addStudentBtn');
+const addStudentModal = document.getElementById('addStudentModal');
+const closeStudentModal = document.getElementById('closeStudentModal');
+const studentForm = document.getElementById('studentForm');
+const editStudentModal = document.getElementById('editStudentModal');
+const closeEditStudentModal = document.getElementById('closeEditStudentModal');
+const editStudentForm = document.getElementById('editStudentForm');
+
+// Display list of students
+function displayStudents() {
+    studentList.innerHTML = '';
+    students.forEach(student => {
+        const studentItem = document.createElement('div');
+        studentItem.innerHTML = `
+            <p>${student.name} (Age: ${student.age}, Grade: ${student.grade})</p>
+            <button onclick="editStudent(${student.id})">Edit</button>
+            <button onclick="deleteStudent(${student.id})">Delete</button>
+        `;
+        studentList.appendChild(studentItem);
+    });
+}
+
+// Show Add Student Modal
+addStudentBtn.onclick = function() {
+    addStudentModal.style.display = 'block';
+};
+
+// Hide Add Student Modal
+closeStudentModal.onclick = function() {
+    addStudentModal.style.display = 'none';
+};
+
+// Hide Edit Student Modal
+closeEditStudentModal.onclick = function() {
+    editStudentModal.style.display = 'none';
+};
+
+// Add new student
+studentForm.onsubmit = function(e) {
+    e.preventDefault();
+    const newStudent = {
+        id: Date.now(),
+        name: document.getElementById('studentName').value,
+        age: document.getElementById('studentAge').value,
+        grade: document.getElementById('studentGrade').value
+    };
+    students.push(newStudent);
+    displayStudents();
+    addStudentModal.style.display = 'none';
+    studentForm.reset();
+};
+
+// Edit existing student
+function editStudent(id) {
+    const student = students.find(s => s.id === id);
+    document.getElementById('editStudentId').value = student.id;
+    document.getElementById('editStudentName').value = student.name;
+    document.getElementById('editStudentAge').value = student.age;
+    document.getElementById('editStudentGrade').value = student.grade;
+    editStudentModal.style.display = 'block';
+}
+
+// Update student
+editStudentForm.onsubmit = function(e) {
+    e.preventDefault();
+    const studentId = document.getElementById('editStudentId').value;
+    const updatedStudent = {
+        id: parseInt(studentId),
+        name: document.getElementById('editStudentName').value,
+        age: document.getElementById('editStudentAge').value,
+        grade: document.getElementById('editStudentGrade').value
+    };
+    const studentIndex = students.findIndex(s => s.id === parseInt(studentId));
+    students[studentIndex] = updatedStudent;
+    displayStudents();
+    editStudentModal.style.display = 'none';
+};
+
+// Delete student
+function deleteStudent(id) {
+    students = students.filter(student => student.id !== id);
+    displayStudents();
+}
+
+// Initialize display
+displayStudents();
+</script>
+
+</body>
+</html>
